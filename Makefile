@@ -12,7 +12,7 @@ default:
 
 jsons:
 	jq '.[].latest_dataset.hosted_url | if . != null then . else empty end' gtfs_feeds.json | \
-	ruby jsons.rb;
-	tippecanoe -f -o a.mbtiles --drop-densest-as-needed a.jsons;
+	head -n 300 | ruby jsons.rb;
+	tippecanoe -f -o a.mbtiles --maximum-zoom=14 --drop-densest-as-needed a.jsons;
 	pmtiles convert a.mbtiles a.pmtiles
 
